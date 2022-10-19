@@ -1,12 +1,11 @@
-
-
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
         int num = Integer.parseInt(br.readLine());
 
@@ -16,11 +15,11 @@ public class Main {
             list.add(Integer.parseInt(br.readLine()));
         }
 
-        int[] arr = list.stream().mapToInt(i -> i).sorted().toArray();
+        Collections.sort(list);
 
-        for (int i = 0; i < arr.length; i++) {
-            bw.write(arr[i] + "\n");
+        for (int result : list) {
+            sb.append(result).append("\n");
         }
-        bw.close();
+        System.out.println(sb);
     }
 }
