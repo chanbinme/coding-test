@@ -1,24 +1,29 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        int num = Integer.parseInt(br.readLine());
+        /**
+         * counting sort 알고리즘 사용
+         * -1000000 ~ 1000000
+         * 기준점 0 = index 1000000으로 생각
+         */
+        boolean[] arr = new boolean[2000001];
 
-        ArrayList<Integer> list = new ArrayList<>();
+        int N = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < num; i++) {
-            list.add(Integer.parseInt(br.readLine()));
+        for (int i = 0; i < N; i++) {
+            arr[Integer.parseInt(br.readLine()) + 1000000] = true;
         }
 
-        Collections.sort(list);
-
-        for (int result : list) {
-            sb.append(result).append("\n");
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i]) {
+                sb.append(i - 1000000).append("\n");
+            }
         }
         System.out.println(sb);
     }
