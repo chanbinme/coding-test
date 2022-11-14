@@ -20,7 +20,7 @@ public class Main {
             if (prime == 2) {
                 count++;
             } else if (prime > 2) {
-                for (int j = 2; j <= prime / 2; j++) {
+                for (int j = 2; j <= Math.sqrt(prime); j++) {
                     /* 2부터 num미만의 수로 num을 나눴을 때 나머지가 0이면 소수가 아님 */
                     if (prime % j == 0) {
                         check = false;
