@@ -22,7 +22,7 @@ class Solution {
             List<String> sameLen = list.stream().filter(p -> p.length() == min).collect(Collectors.toList());
 
             for (String phone : phone_book) {
-                if (phone.length() > min) {
+                if (phone.length() >= min) {
                     /* 비교하려는 모든 전화번호의 길이를 phone의 길이와 맞춥니다. */
                     phone = phone.substring(0, min);
                 }
