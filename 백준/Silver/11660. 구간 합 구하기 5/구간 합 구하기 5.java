@@ -1,43 +1,54 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader =
-                new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int count = Integer.parseInt(stringTokenizer.nextToken());
-        int number = Integer.parseInt(stringTokenizer.nextToken());
+        // 2차원 배열 크기
+        int N = Integer.parseInt(st.nextToken());
 
-        int[][] arr = new int[count + 1][count + 1];
-        int[][] sumArr = new int[count + 1][count + 1];
+        // 질의 수
+        int M = Integer.parseInt(st.nextToken());
 
-        for (int i = 1; i <= count; i++) {
-            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-            for (int j = 1; j <= count; j++) {
-                arr[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+        long[][] sumArr = new long[N + 1][N + 1];
+
+        // 구간 합 구하기
+        for (int i = 1; i < sumArr.length; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 1; j < sumArr.length; j++) {
+                if (i == 1 && j == 1) {
+                    sumArr[i][j] = Integer.parseInt(st.nextToken());
+                } else if (j == 1) {
+                    sumArr[i][j] = sumArr[i - 1][j] + Integer.parseInt(st.nextToken());
+                } else if (i == 1) {
+                    sumArr[i][j] = sumArr[i][j - 1] + Integer.parseInt(st.nextToken());
+                } else {
+                    sumArr[i][j] = sumArr[i][j - 1] + sumArr[i - 1][j] - sumArr[i - 1][j - 1] + Integer.parseInt(st.nextToken());
+                }
             }
         }
 
-        for (int i = 1; i <= count; i++) {
-            for (int j = 1; j <= count; j++) {
-                sumArr[i][j] = sumArr[i - 1][j] + sumArr[i][j - 1] - sumArr[i - 1][j - 1] + arr[i][j];
+        // 질의 답
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+
+            int x1 = Integer.parseInt(st.nextToken());
+            int y1 = Integer.parseInt(st.nextToken());
+            int x2 = Integer.parseInt(st.nextToken());
+            int y2 = Integer.parseInt(st.nextToken());
+
+            if (x1 == 1 && y1 == 1) {
+                bw.write(sumArr[x2][y2] + "\n");
+            } else {
+                bw.write(sumArr[x2][y2] - sumArr[x1 - 1][y2] - sumArr[x2][y1 - 1] + sumArr[x1 - 1][y1 - 1] + "\n");
             }
         }
 
-        for (int i = 0; i < number; i++) {
-            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-            int x1 = Integer.parseInt(stringTokenizer.nextToken());
-            int y1 = Integer.parseInt(stringTokenizer.nextToken());
-            int x2 = Integer.parseInt(stringTokenizer.nextToken());
-            int y2 = Integer.parseInt(stringTokenizer.nextToken());
-
-            int result = sumArr[x2][y2] - sumArr[x1 - 1][y2] - sumArr[x2][y1 - 1] + sumArr[x1 - 1][y1 - 1];
-            System.out.println(result);
-        }
+        bw.flush();
+        bw.close();
     }
 }
