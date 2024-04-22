@@ -1,25 +1,32 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int count = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int[] arr = new int[count]; // a 길이만큼의 배열 생성
-        double average = 0;
-        for (int i = 0; i < count; i++) {
-            arr[i] = sc.nextInt();
+        // 과목의 개수
+        int N = Integer.parseInt(br.readLine());
+        String[] points = br.readLine().split(" ");
+        double[] doublePoints = new double[N];
+
+        // 과목 중 가장 큰 수를 구함
+        double max = 0;
+        for (int i = 0; i < N; i++) {
+            doublePoints[i] = Double.parseDouble(points[i]);
+            if (max < doublePoints[i]) {
+                max = doublePoints[i];
+            }
         }
-        // 제일 높은 점수 구하기
-        int max = Arrays.stream(arr)
-                .max()  // 최댓값 구하기
-                .getAsInt(); // int형으로 호출
 
-        for (double i : arr) {
-            average += i / max * 100;
+        // 가장 큰 점수로 새로운 점수를 구함
+        double sum = 0;
+        for (int i = 0; i < doublePoints.length; i++) {
+            sum += doublePoints[i] / max * 100;
         }
 
-        System.out.println(average / count);
+        bw.write(String.valueOf(sum / N));
+        bw.flush();
+        bw.close();
     }
 }
