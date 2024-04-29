@@ -1,31 +1,33 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int N = Integer.parseInt(bufferedReader.readLine());
-        int answer = 1;     // 더하는 값 없이 자기 자신만 답일 경우를 위해 1로 초기화
+        int N = Integer.parseInt(br.readLine());
 
-        int startIdx = 1;
-        int endIdx = 1;
+        int count = 1;
         int sum = 1;
+        int startIndex = 1;
+        int endIndex = 1;
 
-        while (endIdx != N) {
-            if (sum == N) {
-                answer++;
-                endIdx++;
-                sum += endIdx;
+        while (endIndex != N) {
+            if (sum > N) {
+                sum -= startIndex;
+                startIndex++;
             } else if (sum < N) {
-                endIdx++;
-                sum += endIdx;
+                endIndex++;
+                sum += endIndex;
             } else {
-                sum -= startIdx;
-                startIdx++;
+                endIndex++;
+                sum += endIndex;
+                count++;
             }
         }
-        System.out.println(answer);
+
+        bw.write(String.valueOf(count));
+        bw.flush();
+        bw.close();
     }
 }
