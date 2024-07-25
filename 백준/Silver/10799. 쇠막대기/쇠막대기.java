@@ -9,24 +9,28 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        Stack<String> stack = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
 
-        String[] pipeLines = br.readLine().split("");
+        String pipeLines = br.readLine();
         int result = 0;
 
-        for (int i = 0; i < pipeLines.length; i++) {
-            String object = pipeLines[i];
+        for (int i = 0; i < pipeLines.length(); i++) {
+            char currentChar = pipeLines.charAt(i);
+            char beforeChar = ' ';
+            if (i > 0) {
+                beforeChar = pipeLines.charAt(i - 1);
+            }
 
-            if (object.equals("(")) {
+            if (currentChar == '(') {
                 // 파이프.
-                stack.push(object);
-            } else if (object.equals(")")) {
+                stack.push(0);
+            } else if (currentChar == ')') {
                 // 레이저.
-                if (pipeLines[i - 1].equals("(")) {
+                if (beforeChar == '(') {
                     stack.pop();
                     result += stack.size();
                 // 파이프 꼬다리.
-                } else if (pipeLines[i - 1].equals(")")) {
+                } else if (beforeChar == ')') {
                     stack.pop();
                     result += 1;
                 }
