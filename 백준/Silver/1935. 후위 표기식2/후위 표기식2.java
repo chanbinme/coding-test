@@ -1,47 +1,42 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        String prefix = br.readLine();
-
-        int[] arr = new int[n];
-        for(int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
+        String str = br.readLine();
+        ArrayDeque<Double> deque = new ArrayDeque<>();
+        double[] arr = new double[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = Double.parseDouble(br.readLine());
         }
-
-        Stack<Double> operand = new Stack<>();
-        int len = prefix.length();
-        for(int i = 0; i < len; i++) {
-            char ch = prefix.charAt(i);
-            if('A' <= ch && ch <= 'Z') {  // operand
-                double d = arr[ch - 'A'];
-                operand.push(d);
-            }else {  // operator
-                double d1 = operand.pop();
-                double d2 = operand.pop();
-                double d3 = 0.0;
-                switch(ch) {
-                    case '+' :
-                        d3 = d2 + d1;
-                        break;
-                    case '-' :
-                        d3 = d2 - d1;
-                        break;
-                    case '*' :
-                        d3 = d2 * d1;
-                        break;
-                    case '/' :
-                        d3 = d2 / d1;
-                        break;
+        for (int i = 0; i < str.length(); i++) {
+            char chr = str.charAt(i);
+            double result =0;
+            if (chr - 65 >= 0 && chr - 65 <= 26) {
+                deque.push(arr[chr - 65]);
+            } else {
+                double a = deque.pop();
+                double b = deque.pop();
+                if (chr == '+') {
+                    result = b+a;
+                    deque.push(result);
+                } else if (chr == '*') {
+                    result = b*a;
+                    deque.push(result);
+                } else if (chr == '-') {
+                    result = b-a;
+                    deque.push(result);
+                } else if (chr == '/') {
+                    result = b/a;
+                    deque.push(result);
                 }
-                operand.push(d3);
             }
         }
-        System.out.printf("%.2f", operand.pop());
+        bw.write(String.format("%.2f", deque.pollLast()));
+        bw.flush();
+        bw.close();
     }
 }
