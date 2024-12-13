@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Main main = new Main();
+        Scanner sc = new Scanner(System.in);
+
+        // 총 항수 입력 받음
+        int number = Integer.parseInt(sc.nextLine());
+
+        System.out.println(main.solution(number));
+    }
+
+    public String solution(int number) {
+        StringBuilder sb = new StringBuilder();
+        int[] fibonachi = new int[number];
+        fibonachi[0] = 1;
+        fibonachi[1] = 1;
+
+        // 2부터 number까지 루프
+        for (int i = 2; i < number; i++) {
+            // 피보나치 수열 계산
+            fibonachi[i] = fibonachi[i - 2] + fibonachi[i - 1];
+        }
+
+        for (int num : fibonachi) {
+            sb.append(num).append(" ");
+        }
+        return sb.toString();
+    }
+}
