@@ -1,0 +1,49 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Main main = new Main();
+        Scanner sc = new Scanner(System.in);
+
+        // 가위바위보 라운드 수 입력 받음
+        int round = Integer.parseInt(sc.nextLine());
+
+        // A와 B의 가위바위보 입력 받음
+        int[] aList = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int[] bList = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        main.solution(round, aList, bList);
+    }
+
+    public void solution(int round, int[] aList, int[] bList) {
+        for (int i = 0; i < round; i++) {
+            // round 별 a와 b의 가위바위보 확인
+            int a = aList[i];
+            int b = bList[i];
+
+            // 가위바위보 승자 출력 (1 -> 가위, 2 -> 바위, 3 -> 보)
+            if (a == b) {
+                System.out.println("D");
+            } else if (a == 1) {
+                if (b == 2) {
+                    System.out.println("B");
+                } else {
+                    System.out.println("A");
+                }
+            } else if (a == 2) {
+                if (b == 1) {
+                    System.out.println("A");
+                } else {
+                    System.out.println("B");
+                }
+            } else if (a == 3) {
+                if (b == 1) {
+                    System.out.println("B");
+                } else {
+                    System.out.println("A");
+                }
+            }
+        }
+    }
+}
