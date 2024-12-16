@@ -12,35 +12,17 @@ public class Main {
     }
 
     public String solution(String word) {
-        // 대소문자 구분하지 않기 위해 소문자로 변환
-        word = word.toLowerCase();
+        String answer = "NO";
 
-        // 공백 제거
-        word = word.trim();
+        // 소문자로 변환 후 알파벳을 제외한 문자 및 공백 제거
+        word = word.toLowerCase().replaceAll("[^a-z]", "");
 
-        // 문자 배열로 변환
-        char[] chars = word.toCharArray();
-
-        // lt와 rt가 교차할 때까지 반복
-        int lt = 0;
-        int rt = chars.length - 1;
-        while (lt < rt) {
-            // 알파벳이 아니라면 이동
-            if (!Character.isAlphabetic(chars[lt])) {
-                lt++;
-            } else if (!Character.isAlphabetic(chars[rt])) {
-                rt--;
-            } else {
-                // lt 문자와 rt 문자가 다르면 NO 반환
-                if (chars[lt] != chars[rt]) {
-                    return "NO";
-                }
-                // lt와 rt 이동
-                lt++;
-                rt--;
-            }
+        // 문자를 뒤집음. 뒤집은 문자와 문자가 같으면 팰린드롬 문자
+        String reverseWord = new StringBuilder(word).reverse().toString();
+        if (word.equals(reverseWord)) {
+            answer = "YES";
         }
-        // YES 반환
-        return "YES";
+
+        return answer;
     }
 }
