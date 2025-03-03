@@ -5,18 +5,24 @@ class Solution {
         answer[0] = (numer1 * denom2) + (numer2 * denom1);
         answer[1] = denom1 * denom2;
         
-        int max = 1;
         int numer = answer[0];
         int denom = answer[1];
+        int max = 0;
+        if(numer <= denom) {
+            max = numer;
+        } {
+            max = denom;
+        }
         
-        for (int i = 1; i <= numer && i <= denom; i++) {
+        
+        for (int i = max; i >= 1; i--) {
             if (numer % i == 0 && denom % i == 0) {
-                max = i;
+                answer[0] = numer / i;
+                answer[1] = denom / i;
+                break;
             }
         }
-        answer[0] = numer / max;
-        answer[1] = denom / max;
-        
+
         return answer;
     }
 }
